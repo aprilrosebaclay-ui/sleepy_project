@@ -1,52 +1,41 @@
 <?php
+session_start();
+date_default_timezone_set('Asia/Manila');
 include 'connection.php';
+
+$userName = $_SESSION['full_name'] ?? "User";
+$firstName = explode(' ', $userName)[0];
 
 $result = "";
 $error = "";
 
+$workout  = $_POST['workout'] ?? '';
+$reading  = $_POST['reading'] ?? '';
+$phone    = $_POST['phone'] ?? '';
+$work     = $_POST['work'] ?? '';
+$caffeine = $_POST['caffeine'] ?? '';
+$relax    = $_POST['relax'] ?? '';
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $workout_val  = floatval($workout);
+    $reading_val  = floatval($reading);
+    $phone_val    = floatval($phone);
+    $work_val     = floatval($work);
+    $caffeine_val = floatval($caffeine);
+    $relax_val    = floatval($relax);
 
-    // Sanitize inputs
-    $workout  = floatval($_POST['workout'] ?? 0);
-    $reading  = floatval($_POST['reading'] ?? 0);
-    $phone    = floatval($_POST['phone'] ?? 0);
-    $work     = floatval($_POST['work'] ?? 0);
-    $caffeine = floatval($_POST['caffeine'] ?? 0);
-    $relax    = floatval($_POST['relax'] ?? 0);
+    $pythonPath = 'C:\Users\torre\AppData\Local\Programs\Python\Python311\python.exe';
+    $scriptPath = __DIR__ . '\sleep_api\app.py';
 
-    // FULL PYTHON PATH + SCRIPT PATH
-    $pythonPath = "C:\Users\ROSE\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.13_qbz5n2kfra8p0\python.exe";
-    $scriptPath = "sleep_api\app.py";
-
-    // Run Python command
-    $command = "\"$pythonPath\" \"$scriptPath\" $workout $reading $phone $work $caffeine $relax 2>&1";
+    $command = "\"$pythonPath\" \"$scriptPath\" $workout_val $reading_val $phone_val $work_val $caffeine_val $relax_val 2>&1";
     $output = shell_exec($command);
 
-    // Process output
     if ($output !== null) {
         $cleanOutput = trim($output);
-
         if (is_numeric($cleanOutput)) {
             $result = $cleanOutput;
-
-            // Save valid prediction
-            $stmt = $conn->prepare("
-                INSERT INTO history 
-                (workout, reading, phone, work_hours, caffeine, relaxation, predicted_sleep)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            ");
-
-            $stmt->bind_param(
-                "ddddddd",
-                $workout,
-                $reading,
-                $phone,
-                $work,
-                $caffeine,
-                $relax,
-                $result
-            );
-
+            $stmt = $conn->prepare("INSERT INTO history (workout, reading, phone, work_hours, caffeine, relaxation, predicted_sleep) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ddddddd", $workout_val, $reading_val, $phone_val, $work_val, $caffeine_val, $relax_val, $result);
             $stmt->execute();
         } else {
             $error = "Python Error: " . $cleanOutput;
@@ -60,125 +49,105 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sleep Predictor</title>
-
+    <title>RestIQ - Predict Sleep</title>
+    <link rel="stylesheet" href="CSS/restiq.css">
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #120024, #2a0a4a, #3b1d6b);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: white;
-            margin: 0;
+        .predict-container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
         }
-
-        .container {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(15px);
-            padding: 35px;
-            border-radius: 20px;
-            width: 400px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        .form-group {
+            margin-bottom: 15px;
         }
-
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
         label {
+            display: block;
             font-size: 13px;
-            opacity: 0.8;
+            color: #c084fc;
+            margin-bottom: 5px;
+            text-transform: uppercase;
         }
-
         input {
             width: 100%;
-            padding: 10px;
-            margin: 5px 0 12px;
-            border-radius: 8px;
-            border: none;
-            box-sizing: border-box;
-        }
-
-        button {
-            width: 100%;
             padding: 12px;
-            background: linear-gradient(135deg, #6a2cd8, #9333ea);
-            border: none;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
             color: white;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: 0.3s;
+            outline: none;
         }
-
-        button:hover {
-            transform: scale(1.05);
+        input:focus {
+            border-color: #c084fc;
         }
-
-        .result {
-            margin-top: 20px;
+        .result-box {
+            margin-top: 25px;
             text-align: center;
-            padding: 15px;
-            border-radius: 10px;
-            word-wrap: break-word;
+            padding: 20px;
+            border-radius: 12px;
+            background: rgba(0,255,150,0.05);
+            border: 1px solid rgba(0,255,150,0.2);
         }
-
-        .success {
-            background: rgba(0,255,150,0.1);
-            color: #00ffcc;
-        }
-
-        .error {
-            background: rgba(255,0,0,0.1);
+        .error-box {
+            margin-top: 25px;
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            background: rgba(255,0,0,0.05);
+            border: 1px solid rgba(255,0,0,0.2);
             color: #ff6b6b;
-            font-size: 13px;
         }
     </style>
 </head>
 
 <body>
+<div class="admin-container">
+    <?php include 'sidebar.php'; ?>
+    <div class="main-area" style="display: flex; align-items: center; justify-content: center;">
+        <div class="card predict-container">
+            <h2 style="text-align: center; margin-bottom: 25px;">🧠 Sleep Predictor</h2>
+            <form method="POST">
+                <div class="form-group">
+                    <label>Workout (hrs)</label>
+                    <input type="number" step="any" name="workout" value="<?php echo htmlspecialchars($workout); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label>Reading (hrs)</label>
+                    <input type="number" step="any" name="reading" value="<?php echo htmlspecialchars($reading); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label>Phone Usage (hrs)</label>
+                    <input type="number" step="any" name="phone" value="<?php echo htmlspecialchars($phone); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label>Work Hours (hrs)</label>
+                    <input type="number" step="any" name="work" value="<?php echo htmlspecialchars($work); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label>Caffeine (mg)</label>
+                    <input type="number" step="any" name="caffeine" value="<?php echo htmlspecialchars($caffeine); ?>" required>
+                </div>
+                <div class="form-group">
+                    <label>Relaxation (hrs)</label>
+                    <input type="number" step="any" name="relax" value="<?php echo htmlspecialchars($relax); ?>" required>
+                </div>
 
-<div class="container">
-    <h2>🌙 Sleep Predictor</h2>
+                <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
+                    <a href="sleep_prediction.php" class="btn" style="width: 100%; background: #4b5563;">Run Another Prediction</a>
+                <?php else: ?>
+                    <button type="submit" class="btn" style="width: 100%;">Predict Sleep</button>
+                <?php endif; ?>
+            </form>
 
-    <form method="POST">
-
-        <label>Workout (hrs)</label>
-        <input type="number" step="any" name="workout" required>
-
-        <label>Reading (hrs)</label>
-        <input type="number" step="any" name="reading" required>
-
-        <label>Phone Usage (hrs)</label>
-        <input type="number" step="any" name="phone" required>
-
-        <label>Work Hours (hrs)</label>
-        <input type="number" step="any" name="work" required>
-
-        <label>Caffeine (mg)</label>
-        <input type="number" step="any" name="caffeine" required>
-
-        <label>Relaxation (hrs)</label>
-        <input type="number" step="any" name="relax" required>
-
-        <button type="submit">Predict Sleep</button>
-    </form>
-
-    <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
-        <div class="result <?php echo is_numeric($result) ? 'success' : 'error'; ?>">
-            <?php
-            if (is_numeric($result)) {
-                echo "🛌 Predicted Sleep:<br><strong style='font-size:24px;'>$result hrs</strong>";
-            } else {
-                echo $error;
-            }
-            ?>
+            <?php if ($result !== ""): ?>
+                <div class="result-box">
+                    <p style="color: #00ffcc; font-size: 14px;">🛌 Predicted Sleep:</p>
+                    <strong style="font-size: 28px; color: white;"><?php echo number_format($result, 2); ?> hrs</strong>
+                </div>
+            <?php elseif ($error !== ""): ?>
+                <div class="error-box"><?php echo $error; ?></div>
+            <?php endif; ?>
         </div>
-    <?php endif; ?>
-
+    </div>
 </div>
-
 </body>
 </html>

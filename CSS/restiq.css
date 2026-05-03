@@ -1,0 +1,128 @@
+/* RestIQ Common Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: radial-gradient(circle at top, #3b0a6b, #12001f 70%);
+    color: white;
+    overflow-x: hidden;
+}
+
+/* LAYOUT */
+.admin-container {
+    display: flex;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    background: rgba(25, 10, 50, 0.7);
+    backdrop-filter: blur(18px);
+    padding: 25px;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    z-index: 1000;
+}
+
+.sidebar-brand {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.sidebar-brand h2 {
+    font-size: 24px;
+    color: #c084fc;
+}
+
+.sidebar-brand p {
+    font-size: 12px;
+    color: #aaa;
+}
+
+.menu-item {
+    display: block;
+    padding: 12px 15px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #ddd;
+    margin-bottom: 10px;
+    transition: 0.3s ease;
+}
+
+.menu-item:hover {
+    background: rgba(168,85,247,0.15);
+    transform: translateX(5px);
+}
+
+.menu-item.active {
+    background: linear-gradient(90deg, #7c3aed, #a855f7);
+    box-shadow: 0 5px 15px rgba(168,85,247,0.3);
+    color: white;
+}
+
+/* MAIN CONTENT */
+.main-area {
+    margin-left: 260px;
+    padding: 40px;
+    width: calc(100% - 260px);
+    min-height: 100vh;
+}
+
+/* COMMON COMPONENTS */
+.card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(15px);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.btn {
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    border: none;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(168,85,247,0.4);
+}
+
+.btn-secondary {
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .sidebar {
+        width: 70px;
+        padding: 15px 5px;
+    }
+    .sidebar-brand h2, .sidebar-brand p, .menu-item span {
+        display: none;
+    }
+    .main-area {
+        margin-left: 70px;
+        width: calc(100% - 70px);
+    }
+}

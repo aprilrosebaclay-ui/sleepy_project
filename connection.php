@@ -2,8 +2,8 @@
 // REMOVED: session_start(); ← Let individual pages handle sessions
 
 $servername = "localhost";
-$username = "April rose";
-$password = "Daniel_1610";
+$username = "root";
+$password = "safe_zone08";
 $dbname = "restiq_db";
 
 // Create connection
