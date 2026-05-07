@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 07, 2026 at 10:52 AM
+-- Generation Time: May 07, 2026 at 12:37 PM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.16
 
@@ -89,7 +89,8 @@ INSERT INTO `history` (`id`, `workout`, `reading`, `phone`, `work_hours`, `caffe
 (43, 3, 4, 2, 4, 3, 4, 7.56, '2026-05-04 00:02:20'),
 (44, 3, 4, 2, 4, 3, 4, 7.56, '2026-05-04 00:02:25'),
 (45, 0.17, 0.9, 2.44, 7.11, 226.96, 0.06, 3.62, '2026-05-04 00:03:20'),
-(46, 415, 55, 5, 5, 5, 5, 6.91, '2026-05-07 09:23:20');
+(46, 415, 55, 5, 5, 5, 5, 6.91, '2026-05-07 09:23:20'),
+(47, 3, 4, 4, 6, 6, 6, 5.62, '2026-05-07 12:36:27');
 
 -- --------------------------------------------------------
 
@@ -137,9 +138,8 @@ INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `middle_name`, `b_day
 (5, 'grace', 'anabieza', 'anuber', '2001-04-10', 'F', 'graceanabieza@bisu.edu.ph', 'grace', '$2y$10$rUT.w.t9U17OKepjB8nTeOt8Yh1Qd3jvR96PcAsfEouvzRBqfEEi6', '2026-04-07 11:05:14', 'user'),
 (6, 'anamarie', 'suhayon', 'labao', '2020-03-24', 'F', 'anamariesuhayon@gmail.com', 'anamarie', '$2y$10$H/UQKB1gKGAcpML5ebiNleJySrDpNX4M/QHjyYPb.yUri1gzdTsn6', '2026-04-24 15:24:30', 'user'),
 (7, 'hendrian', 'generalao', 'jaja', '2006-07-28', 'M', 'hendriangeneralao@gmail.com', 'hendrian', '$2y$10$XxKYNMNi4Uc7odg2Buf5X.tKjlercfUmcMI.2rm82NsUebjfiTgBy', '2026-04-28 11:38:38', 'user'),
-(8, 'Admin', 'System', '', '2000-01-01', 'M', 'admin@gmail.com', 'admin', '$2y$10$0lOyw0z41yR6Cl5QGiurx./ZoZBRtPbF2P5/aWASKIzFoQEzvOT16', '2026-04-28 11:47:29', 'admin'),
+(8, 'Admin', 'Heloo', '', '2000-01-01', 'M', 'admin@gmail.com', 'admin', '$2y$10$0lOyw0z41yR6Cl5QGiurx./ZoZBRtPbF2P5/aWASKIzFoQEzvOT16', '2026-04-28 11:47:29', 'admin'),
 (9, 'crist daniel', 'cotacte', 'jabalde', '2004-03-16', 'M', 'cristdanielcotacte@gmail.com', 'daniel', '$2y$10$fl2owK2yUNidkh50zQ5jOuExMWIQ189ShZYittkZLGil6gUS1Imp6', '2026-04-28 18:26:11', 'user'),
-(10, 'atasha', 'jubane', 'j', '2010-04-09', 'F', 'atasha@gmail.com', 'atasha', '$2y$10$1f2dBNrBcA/Rjq8wMe3wHePtFF8WZEOSFvHMDbnMTLhDUf8a4xcdC', '2026-04-29 00:01:11', 'user'),
 (11, 'jhon', 'Doe', '', '2005-12-12', 'M', 'jhon@gmail.com', 'jhon', '$2y$10$Aa0zRlfWaf7FBYAuoUv.ru5iAkCWm7OyAuKSEtNwNY24GzO09.8qa', '2026-05-01 12:48:56', 'user');
 
 --
@@ -175,7 +175,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `history`
 --
 ALTER TABLE `history`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `predictions`
