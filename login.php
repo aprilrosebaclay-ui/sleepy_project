@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($user_name) || empty($password)) {
         $error = "Please enter username and password.";
     } else {
-        $sql = "SELECT user_id, first_name, last_name, user_name, password 
+        $sql = "SELECT user_id, first_name, last_name, user_name, password, role 
                 FROM users WHERE user_name = ? OR email = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $user_name, $user_name);
@@ -38,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['user_id'] = $user['user_id'];
                 $_SESSION['user_name'] = $user['user_name'];
                 $_SESSION['full_name'] = $user['first_name'] . " " . $user['last_name'];
+                $_SESSION['role'] = $user['role'];
 
                 if ($remember) {
                     setcookie('remember_username', $user_name, time() + (86400 * 30), "/");
@@ -45,7 +46,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     setcookie('remember_username', '', time() - 3600, "/");
                 }
 
-                header("Location: dashboard.php");
+                if ($_SESSION['role'] === 'admin') {
+                    header("Location: myadmin.php");
+                } else {
+                    header("Location: dashboard.php");
+                }
                 exit();
             } else {
                 $error = "Invalid password!";
@@ -64,98 +69,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login - RestIQ</title>
-
-<style>
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background: url("image/MOON.png") no-repeat center center fixed;
-    background-size: cover;
-}
-
-/* Dark overlay */
-body::before {
-    content: "";
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    top: 0;
-    left: 0;
-    z-index: -1;
-}
-
-/* Container */
-.container {
-    width: 350px;
-    margin: 80px auto;
-    padding: 20px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    text-align: center;
-    color: white;
-}
-
-/* Inputs */
-input {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
-    border: none;
-}
-
-/* Button */
-button {
-    width: 100%;
-    padding: 10px;
-    background: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* Messages */
-.message.error {
-    background: red;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-.message.success {
-    background: green;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-/* Password toggle */
-.password-wrapper {
-    position: relative;
-}
-.toggle-password {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    cursor: pointer;
-}
-
-/* Options */
-.options {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    margin: 10px 0;
-}
-</style>
+<link rel="stylesheet" href="CSS/pages/auth.css">
 
 </head>
 
 <body>
 
 <div class="container">
-    <img src="image/RestIQ.png" alt="Logo" style="width:100px;">
+    <img src="image/RestIQ.png" alt="Logo" class="logo">
 
     <?php if ($success): ?>
         <div class="message success"><?php echo $success; ?></div>
@@ -181,13 +102,13 @@ button {
                 <input type="checkbox" name="remember" <?php echo $remembered_username ? 'checked' : ''; ?>>
                 Remember me
             </label>
-            <a href="forgot_password.php" style="color:white;">Forgot?</a>
+            <a href="forgot_password.php" class="auth-link">Forgot?</a>
         </div>
 
         <button type="submit">Login</button>
     </form>
 
-    <p>Don't have an account? <a href="register.php" style="color:white;"><strong>Register</strong></a></p>
+    <p>Don't have an account? <a href="register.php" class="auth-link"><strong>Register</strong></a></p>
 </div>
 
 <script>

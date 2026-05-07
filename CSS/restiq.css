@@ -8,7 +8,7 @@
 
 body {
     min-height: 100vh;
-    background: radial-gradient(circle at top, #3b0a6b, #12001f 70%);
+    background: linear-gradient(180deg, #160428 0%, #0b0310 100%);
     color: white;
     overflow-x: hidden;
 }
@@ -16,6 +16,7 @@ body {
 /* LAYOUT */
 .admin-container {
     display: flex;
+    align-items: flex-start;
 }
 
 /* SIDEBAR */
@@ -38,6 +39,7 @@ body {
 .sidebar-brand h2 {
     font-size: 24px;
     color: #c084fc;
+    font-weight: 800;
 }
 
 .sidebar-brand p {
@@ -66,6 +68,20 @@ body {
     color: white;
 }
 
+.menu-item--accent {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    margin-top: 10px;
+    padding-top: 10px;
+    color: #a855f7;
+}
+
+.menu-item--logout {
+    margin-top: auto;
+    color: #ff6b6b;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding-top: 20px;
+}
+
 /* MAIN CONTENT */
 .main-area {
     margin-left: 260px;
@@ -76,12 +92,14 @@ body {
 
 /* COMMON COMPONENTS */
 .card {
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(15px);
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+    /* lighter backdrop blur to avoid melting/soft-focus look */
+    backdrop-filter: blur(6px);
+    padding: 20px;
+    border-radius: 12px;
+    /* smaller, tighter shadow for crisper UI */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.07);
 }
 
 .btn {

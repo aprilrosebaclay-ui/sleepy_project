@@ -1,0 +1,101 @@
+@import url("../restiq.css");
+
+.table-page-title {
+    font-size: 28px;
+}
+
+.table-page-subtitle {
+    color: #aaa;
+}
+
+.table-shell table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table-shell {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 18px;
+    border-radius: 12px;
+    backdrop-filter: none; /* make table area sharp */
+}
+
+.table-shell th {
+    text-align: left;
+    padding: 15px;
+    background: rgba(168,85,247,0.1);
+    color: #c084fc;
+    font-size: 13px;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.table-shell td {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 14px;
+}
+
+.badge-success {
+    background: rgba(0,255,150,0.1);
+    color: #00ffcc;
+    border: 1px solid rgba(0,255,150,0.2);
+}
+
+.badge-warning {
+    background: rgba(255,165,0,0.1);
+    color: #ffa500;
+    border: 1px solid rgba(255,165,0,0.2);
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.page-link {
+    padding: 8px 16px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    color: #aaa;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+.page-link:hover {
+    background: rgba(168,85,247,0.1);
+    color: #c084fc;
+    border-color: #c084fc;
+}
+
+.page-link.active {
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    color: white;
+    border: none;
+}
+
+.page-link.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 50px;
+    color: #999;
+}
+
+.predicted-value {
+    font-weight: 700;
+    color: #c084fc;
+}
+
+.page-meta { color: #bbb; }

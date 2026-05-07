@@ -8,6 +8,12 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+// ADMIN CANNOT ACCESS USER HISTORY
+if ($_SESSION['role'] === 'admin') {
+    header("Location: myadmin.php");
+    exit();
+}
+
 $userName = $_SESSION['full_name'] ?? "User";
 $firstName = explode(' ', $userName)[0];
 
@@ -34,84 +40,22 @@ $result_data = $stmt->get_result();
 <head>
     <title>RestIQ - History</title>
     <link rel="stylesheet" href="CSS/restiq.css">
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th {
-            text-align: left;
-            padding: 15px;
-            background: rgba(168,85,247,0.1);
-            color: #c084fc;
-            font-size: 13px;
-            text-transform: uppercase;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        td {
-            padding: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            font-size: 14px;
-        }
-        .badge {
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: bold;
-        }
-        .badge-success { background: rgba(0,255,150,0.1); color: #00ffcc; border: 1px solid rgba(0,255,150,0.2); }
-        .badge-warning { background: rgba(255,165,0,0.1); color: #ffa500; border: 1px solid rgba(255,165,0,0.2); }
-
-        /* PAGINATION STYLES */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-top: 30px;
-        }
-        .page-link {
-            padding: 8px 16px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            color: #aaa;
-            text-decoration: none;
-            transition: 0.3s;
-            font-size: 14px;
-        }
-        .page-link:hover {
-            background: rgba(168,85,247,0.1);
-            color: #c084fc;
-            border-color: #c084fc;
-        }
-        .page-link.active {
-            background: linear-gradient(135deg, #7c3aed, #a855f7);
-            color: white;
-            border: none;
-        }
-        .page-link.disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-    </style>
+    <link rel="stylesheet" href="CSS/pages/history.css">
 </head>
 
 <body>
 <div class="admin-container">
     <?php include 'sidebar.php'; ?>
     <div class="main-area">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <div class="page-header">
             <div>
-                <h1 style="font-size: 28px;">Prediction History</h1>
-                <p style="color: #aaa;">Your past AI-driven sleep predictions (Page <?php echo $page; ?> of <?php echo $total_pages; ?>)</p>
+                <h1 class="table-page-title">Prediction History</h1>
+                <p class="table-page-subtitle">Your past AI-driven sleep predictions (Page <?php echo $page; ?> of <?php echo $total_pages; ?>)</p>
             </div>
-            <div style="color:#bbb;"><?php echo date('F d, Y'); ?></div>
+            <div class="page-meta"><?php echo date('F d, Y'); ?></div>
         </div>
 
-        <div class="card" style="padding: 10px;">
+        <div class="table-shell">
             <?php if ($result_data && $result_data->num_rows > 0): ?>
                 <table>
                     <thead>
@@ -133,7 +77,7 @@ $result_data = $stmt->get_result();
                                 <td><?php echo $row['phone']; ?>h</td>
                                 <td><?php echo $row['work_hours']; ?>h</td>
                                 <td><?php echo $row['caffeine']; ?>mg</td>
-                                <td style="font-weight: bold; color: #c084fc;"><?php echo number_format($row['predicted_sleep'], 2); ?>h</td>
+                                <td class="predicted-value"><?php echo number_format($row['predicted_sleep'], 2); ?>h</td>
                                 <td>
                                     <?php if ($row['predicted_sleep'] >= 7): ?>
                                         <span class="badge badge-success">Healthy ✨</span>
@@ -168,8 +112,8 @@ $result_data = $stmt->get_result();
                     </div>
                 <?php endif; ?>
 
-            <?php else: ?>
-                <div style="text-align: center; padding: 50px; color: #999;">
+                    <?php else: ?>
+                <div class="empty-state">
                     <h3>No history found</h3>
                     <p>Start by making your first prediction!</p>
                 </div>

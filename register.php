@@ -77,74 +77,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Register - RestIQ</title>
-
-<style>
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background: url("image/MOON.png") no-repeat center center fixed;
-    background-size: cover;
-}
-
-/* Dark overlay */
-body::before {
-    content: "";
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    top: 0;
-    left: 0;
-    z-index: -1;
-}
-
-/* Container styling */
-.container {
-    width: 350px;
-    margin: 50px auto;
-    padding: 20px;
-    border-radius: 10px;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    text-align: center;
-    color: white;
-}
-
-/* Inputs */
-input, select {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border-radius: 5px;
-    border: none;
-}
-
-/* Button */
-button {
-    width: 100%;
-    padding: 10px;
-    background: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* Messages */
-.message.error {
-    background: red;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-</style>
+<link rel="stylesheet" href="CSS/pages/auth.css">
 
 </head>
 
 <body>
 
 <div class="container">
-    <img src="image/RestIQ.png" alt="Logo" style="width:100px;">
+    <img src="image/RestIQ.png" alt="Logo" class="logo">
 
     <?php if ($error): ?>
         <div class="message error"><?php echo htmlspecialchars($error); ?></div>
@@ -173,7 +113,7 @@ button {
         <button type="submit">Register</button>
     </form>
 
-    <p>Already have an account? <a href="login.php" style="color:white;">Login</a></p>
+    <p>Already have an account? <a href="login.php" class="auth-link">Login</a></p>
 </div>
 
 <script>

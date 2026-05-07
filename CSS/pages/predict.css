@@ -1,0 +1,21 @@
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.predict-card {
+    border-radius: 25px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.prediction-display {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+}
+
+.confidence-track {
+    height: 25px;
+}
+
+.confidence-bar {
+    width: 0;
+}

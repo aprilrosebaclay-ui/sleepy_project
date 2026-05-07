@@ -1,0 +1,105 @@
+@import url("../restiq.css");
+
+.profile-card {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 30px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+}
+
+.profile-img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 3px solid var(--primary);
+    padding: 5px;
+    background: rgba(255,255,255,0.05);
+    margin-bottom: 20px;
+}
+
+.admin-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--primary), #7c3aed);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    text-align: left;
+}
+
+.info-row label {
+    color: var(--primary);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.info-row span {
+    color: white;
+    font-weight: 500;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 12px;
+    color: var(--primary);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.admin-main-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-title {
+    margin-bottom: 5px;
+}
+
+.admin-title-edit {
+    margin-bottom: 25px;
+}
+
+.admin-subtitle {
+    color: #aaa;
+    margin-bottom: 30px;
+}
+
+.admin-role {
+    color: var(--primary);
+}
+
+.profile-actions {
+    margin-top: 30px;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+.profile-form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}

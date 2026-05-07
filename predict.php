@@ -4,6 +4,12 @@ include 'connection.php';
 
 session_start();
 
+// ADMIN CANNOT ACCESS USER PREDICTION FEATURE
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] === 'admin') {
+    header("Location: login.php");
+    exit();
+}
+
 // Use real logged-in user if available
 $user_id = $_SESSION['user_id'] ?? 1;
 
@@ -61,19 +67,7 @@ $prediction = generatePrediction($pattern);
 <head>
     <title>Predict Sleep - RestIQ</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .predict-card {
-            border-radius: 25px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-        }
-        .prediction-display {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="CSS/pages/predict.css">
 </head>
 <body class="py-5">
 
@@ -127,9 +121,8 @@ $prediction = generatePrediction($pattern);
 
                         <div class="col-md-4">
                             <h5><i class="fas fa-chart-line me-2 text-info"></i>Confidence</h5>
-                            <div class="progress" style="height:25px;">
-                                <div class="progress-bar bg-success"
-                                     style="width: <?php echo $prediction['confidence']; ?>%;">
+                            <div class="progress confidence-track">
+                                <div class="progress-bar bg-success confidence-bar" role="progressbar" data-confidence="<?php echo $prediction['confidence']; ?>">
                                     <?php echo $prediction['confidence']; ?>%
                                 </div>
                             </div>
@@ -172,6 +165,16 @@ $prediction = generatePrediction($pattern);
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.confidence-bar').forEach(function(el) {
+        var pct = el.getAttribute('data-confidence') || '0';
+        el.style.width = pct + '%';
+        // leave text content as-is (PHP printed it), ensure it's visible
+    });
+});
+</script>
 
 </body>
 </html>

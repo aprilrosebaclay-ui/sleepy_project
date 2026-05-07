@@ -1,0 +1,68 @@
+@import url("../restiq.css");
+
+.predict-container {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.predict-title {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    color: #c084fc;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.predict-main-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.result-box {
+    margin-top: 25px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 12px;
+    background: rgba(0,255,150,0.05);
+    border: 1px solid rgba(0,255,150,0.2);
+}
+
+.error-box {
+    margin-top: 25px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 12px;
+    background: rgba(255,0,0,0.05);
+    border: 1px solid rgba(255,0,0,0.2);
+    color: #ff6b6b;
+}
+
+.predict-btn,
+.predict-btn-secondary {
+    width: 100%;
+}
+
+.predict-btn-secondary {
+    background: #4b5563;
+}
+
+.result-label {
+    color: #00ffcc;
+    font-size: 14px;
+}
+
+.result-value {
+    font-size: 28px;
+    color: white;
+}

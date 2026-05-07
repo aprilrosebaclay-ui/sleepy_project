@@ -1,0 +1,237 @@
+@import url("../restiq.css");
+
+:root {
+    --primary: #a855f7;
+    --primary-dark: #7c3aed;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+}
+
+.page-header {
+    margin-bottom: 30px;
+}
+
+.users-title {
+    font-size: 36px;
+    font-weight: 800;
+    background: linear-gradient(to right, #fff, var(--primary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.users-subtitle {
+    color: #aaa;
+    margin-top: 5px;
+}
+
+.table-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 18px;
+    /* no blur: keep table area sharp */
+    backdrop-filter: none;
+}
+
+.users-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.users-heading {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.search-box {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    padding: 10px 16px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: white;
+    font-size: 13px;
+    transition: 0.3s;
+}
+
+.search-box::placeholder {
+    color: #666;
+}
+
+.search-box:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(168, 85, 247, 0.05);
+}
+
+.table-scroll {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead th {
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #c084fc;
+    padding: 12px 14px;
+    background: rgba(168, 85, 247, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    font-weight: 700;
+    text-align: left;
+}
+
+tbody td {
+    padding: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    font-size: 13px;
+    color: #ddd;
+}
+
+tbody tr:hover {
+    background: rgba(168, 85, 247, 0.04);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.user-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #fff;
+}
+
+.user-username {
+    font-size: 12px;
+    color: #999;
+    margin-top: 2px;
+}
+
+.user-joined {
+    color: #999;
+    font-size: 12px;
+}
+
+.badge {
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-admin {
+    background: rgba(168, 85, 247, 0.12);
+    color: #c084fc;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.badge-user {
+    background: rgba(255, 255, 255, 0.05);
+    color: #aaa;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.action-btn {
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    text-decoration: none;
+    display: inline-block;
+    transition: 0.3s;
+    margin-right: 6px;
+    border: 1px solid;
+}
+
+.btn-view {
+    background: rgba(168, 85, 247, 0.08);
+    color: var(--primary);
+    border-color: rgba(168, 85, 247, 0.15);
+}
+
+.btn-view:hover {
+    background: rgba(168, 85, 247, 0.15);
+    border-color: rgba(168, 85, 247, 0.25);
+    text-decoration: none;
+}
+
+.btn-del {
+    background: rgba(255, 107, 107, 0.08);
+    color: #ff6b6b;
+    border-color: rgba(255, 107, 107, 0.15);
+}
+
+.btn-del:hover {
+    background: rgba(255, 107, 107, 0.15);
+    border-color: rgba(255, 107, 107, 0.25);
+    text-decoration: none;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.page-link {
+    padding: 8px 16px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    color: #aaa;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+.page-link:hover {
+    background: rgba(168,85,247,0.1);
+    color: #c084fc;
+    border-color: #c084fc;
+}
+
+.page-link.active {
+    background: linear-gradient(135deg, #7c3aed, #a855f7);
+    color: white;
+    border: none;
+}
+
+.page-link.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+

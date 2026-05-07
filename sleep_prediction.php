@@ -6,6 +6,12 @@ include 'connection.php';
 $userName = $_SESSION['full_name'] ?? "User";
 $firstName = explode(' ', $userName)[0];
 
+// ADMIN CANNOT ACCESS USER SLEEP PREDICTION
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] === 'admin') {
+    header("Location: login.php");
+    exit();
+}
+
 $result = "";
 $error = "";
 
@@ -51,60 +57,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <title>RestIQ - Predict Sleep</title>
     <link rel="stylesheet" href="CSS/restiq.css">
-    <style>
-        .predict-container {
-            width: 100%;
-            max-width: 480px;
-            margin: 0 auto;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            font-size: 13px;
-            color: #c084fc;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-        }
-        input {
-            width: 100%;
-            padding: 12px;
-            background: rgba(255,255,255,0.08);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 10px;
-            color: white;
-            outline: none;
-        }
-        input:focus {
-            border-color: #c084fc;
-        }
-        .result-box {
-            margin-top: 25px;
-            text-align: center;
-            padding: 20px;
-            border-radius: 12px;
-            background: rgba(0,255,150,0.05);
-            border: 1px solid rgba(0,255,150,0.2);
-        }
-        .error-box {
-            margin-top: 25px;
-            text-align: center;
-            padding: 20px;
-            border-radius: 12px;
-            background: rgba(255,0,0,0.05);
-            border: 1px solid rgba(255,0,0,0.2);
-            color: #ff6b6b;
-        }
-    </style>
+    <link rel="stylesheet" href="CSS/pages/sleep-prediction.css">
 </head>
 
 <body>
 <div class="admin-container">
     <?php include 'sidebar.php'; ?>
-    <div class="main-area" style="display: flex; align-items: center; justify-content: center;">
+    <div class="main-area predict-main-area">
         <div class="card predict-container">
-            <h2 style="text-align: center; margin-bottom: 25px;">🧠 Sleep Predictor</h2>
+            <h2 class="predict-title">🧠 Sleep Predictor</h2>
             <form method="POST">
                 <div class="form-group">
                     <label>Workout (hrs)</label>
@@ -132,16 +93,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
 
                 <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
-                    <a href="sleep_prediction.php" class="btn" style="width: 100%; background: #4b5563;">Run Another Prediction</a>
+                    <a href="sleep_prediction.php" class="btn predict-btn-secondary">Run Another Prediction</a>
                 <?php else: ?>
-                    <button type="submit" class="btn" style="width: 100%;">Predict Sleep</button>
+                    <button type="submit" class="btn predict-btn">Predict Sleep</button>
                 <?php endif; ?>
             </form>
 
             <?php if ($result !== ""): ?>
                 <div class="result-box">
-                    <p style="color: #00ffcc; font-size: 14px;">🛌 Predicted Sleep:</p>
-                    <strong style="font-size: 28px; color: white;"><?php echo number_format($result, 2); ?> hrs</strong>
+                    <p class="result-label">🛌 Predicted Sleep:</p>
+                    <strong class="result-value"><?php echo number_format($result, 2); ?> hrs</strong>
                 </div>
             <?php elseif ($error !== ""): ?>
                 <div class="error-box"><?php echo $error; ?></div>

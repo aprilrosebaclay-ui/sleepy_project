@@ -2,15 +2,9 @@
 session_start();
 include("connection.php");
 
-// Check if logged in
-if (!isset($_SESSION['user_id'])) {
+// CHECK ADMIN ROLE - Admin can only access their own admin profile
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     header("Location: login.php");
-    exit();
-}
-
-// ADMIN MUST USE ADMIN PROFILE PAGE
-if ($_SESSION['role'] === 'admin') {
-    header("Location: admin_profile.php");
     exit();
 }
 
@@ -30,12 +24,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_profile'])) {
     $gender_map = ['Male' => 'M', 'Female' => 'F', 'Other' => 'O'];
     $gender_char = $gender_map[$gender_input] ?? 'O';
 
-    $update_sql = "UPDATE users SET first_name = ?, last_name = ?, email = ?, gender = ? WHERE user_id = ?";
+    $update_sql = "UPDATE users SET first_name = ?, last_name = ?, email = ?, gender = ? WHERE user_id = ? AND role = 'admin'";
     $update_stmt = $conn->prepare($update_sql);
     $update_stmt->bind_param("ssssi", $first_name, $last_name, $email, $gender_char, $user_id);
 
     if ($update_stmt->execute()) {
-        $success_msg = "Profile updated successfully!";
+        $success_msg = "Admin profile updated successfully!";
         $_SESSION['full_name'] = $first_name . ' ' . $last_name;
         $mode = 'view';
     } else {
@@ -44,15 +38,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_profile'])) {
     $update_stmt->close();
 }
 
-// Fetch user data
-$sql = "SELECT * FROM users WHERE user_id = ? LIMIT 1";
+// Fetch ADMIN user data only
+$sql = "SELECT * FROM users WHERE user_id = ? AND role = 'admin' LIMIT 1";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows !== 1) {
-    die("User not found.");
+    die("Admin profile not found or access denied.");
 }
 
 $user = $result->fetch_assoc();
@@ -70,14 +64,14 @@ if (in_array($gender_db, ['F', 'FEMALE'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>RestIQ - Profile</title>
+    <title>RestIQ - Admin Profile</title>
     <link rel="stylesheet" href="CSS/restiq.css">
     <link rel="stylesheet" href="CSS/pages/profile.css">
 </head>
 
 <body>
 <div class="admin-container">
-    <?php include 'sidebar.php'; ?>
+    <?php include 'admin_sidebar.php'; ?>
     <div class="main-area profile-main-area">
         
         <div class="card profile-card">
@@ -92,7 +86,7 @@ if (in_array($gender_db, ['F', 'FEMALE'])) {
             <?php endif; ?>
 
             <?php if ($mode == 'view'): ?>
-                <h2 class="profile-title"><?php echo htmlspecialchars($full_name ?: 'User'); ?></h2>
+                <h2 class="profile-title"><?php echo htmlspecialchars($full_name ?: 'Administrator'); ?></h2>
                 <p class="profile-subtitle"><?php echo htmlspecialchars($user['email'] ?? ''); ?></p>
 
                 <div class="info-row">
@@ -117,9 +111,13 @@ if (in_array($gender_db, ['F', 'FEMALE'])) {
                         ?>
                     </span>
                 </div>
+                <div class="info-row">
+                    <label>Account Type</label>
+                    <span>🛡️ Administrator</span>
+                </div>
 
                 <div class="profile-actions">
-                    <a href="profile.php?mode=edit" class="btn btn-full">✏️ Edit Profile</a>
+                    <a href="admin_profile.php?mode=edit" class="btn btn-full">✏️ Edit Profile</a>
                 </div>
 
             <?php else: ?>
@@ -149,14 +147,13 @@ if (in_array($gender_db, ['F', 'FEMALE'])) {
 
                     <div class="profile-form-actions">
                         <button type="submit" name="update_profile" class="btn btn-primary-flex">💾 Save Changes</button>
-                        <a href="profile.php" class="btn btn-secondary btn-secondary-flex">Cancel</a>
+                        <a href="admin_profile.php" class="btn btn-secondary btn-secondary-flex">Cancel</a>
                     </div>
                 </form>
             <?php endif; ?>
-
         </div>
-
     </div>
 </div>
+
 </body>
 </html>
