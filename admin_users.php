@@ -101,7 +101,6 @@ $users_result = $stmt->get_result();
                                 <?php echo date('M d, Y', strtotime($user['timestamp'])); ?>
                             </td>
                             <td>
-                                <a href="view_user.php?id=<?php echo $user['user_id']; ?>" class="action-btn btn-view">Details</a>
                                 <?php if ($user['user_id'] != $_SESSION['user_id']): ?>
                                 <a href="admin_users.php?delete_id=<?php echo $user['user_id']; ?>" 
                                    class="action-btn btn-del" 
