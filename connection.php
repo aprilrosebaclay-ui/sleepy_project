@@ -3,7 +3,7 @@
 
 $servername = "localhost";
 $username = "root";
-$password = "safe_zone08";
+$password = "";
 $dbname = "restiq_db";
 
 // Create connection

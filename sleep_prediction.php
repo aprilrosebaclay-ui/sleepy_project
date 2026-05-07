@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $caffeine_val = floatval($caffeine);
     $relax_val    = floatval($relax);
 
-    $pythonPath = 'C:\Users\torre\AppData\Local\Programs\Python\Python311\python.exe';
+    $pythonPath = 'C:\Users\ROSE\AppData\Local\Microsoft\WindowsApps\python.exe';
     $scriptPath = __DIR__ . '\sleep_api\app.py';
 
     $command = "\"$pythonPath\" \"$scriptPath\" $workout_val $reading_val $phone_val $work_val $caffeine_val $relax_val 2>&1";
