@@ -1,34 +1,36 @@
+:root {
+    --primary: #a855f7;
+    --primary-dark: #7c3aed;
+    --accent: #00ffcc;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 body {
     min-height: 100vh;
-    font-family: Arial, sans-serif;
-    background: url("../image/MOON.png") no-repeat center center fixed;
-    background-size: cover;
+    background: linear-gradient(180deg, #160428 0%, #0b0310 100%);
     color: white;
-}
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
 }
 
 .container {
-    width: min(100%, 380px);
-    margin: 60px auto;
-    padding: 24px;
-    border-radius: 16px;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
+    width: min(100%, 420px);
+    padding: 40px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
     text-align: center;
     color: white;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 8px 32px 0 rgba(168, 85, 247, 0.15);
 }
 
 .logo {
@@ -92,6 +94,7 @@ button:hover {
     display: flex;
     align-items: center;
     gap: 8px;
+    white-space: nowrap;
 }
 
 .message {
@@ -114,4 +117,19 @@ button:hover {
 
 .auth-link strong {
     font-weight: 700;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.form-row input,
+.form-row select {
+    width: 100%;
+}
+
+.form-full {
+    grid-column: 1 / -1;
 }

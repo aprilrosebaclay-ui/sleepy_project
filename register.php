@@ -93,10 +93,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h2>Registration Form</h2>
 
     <form action="register.php" method="POST" onsubmit="return validateForm()">
-        <input type="text" name="first_name" placeholder="First Name" required>
-        <input type="text" name="last_name" placeholder="Last Name" required>
-        <input type="text" name="middle_name" placeholder="Middle Name">
-        <input type="date" name="b_day" required>
+        <div class="form-row">
+            <input type="text" name="first_name" placeholder="First Name" required>
+            <input type="text" name="last_name" placeholder="Last Name" required>
+        </div>
+        
+        <div class="form-row">
+            <input type="text" name="middle_name" placeholder="Middle Name">
+            <input type="date" name="b_day" required>
+        </div>
 
         <select name="gender" required>
             <option value="">Select Gender</option>
@@ -105,10 +110,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="Other">Other</option>
         </select>
 
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="text" name="user_name" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <input type="password" id="confirm_password" placeholder="Confirm Password" required>
+        <div class="form-row">
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="user_name" placeholder="Username" required>
+        </div>
+        
+        <div class="form-row">
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" id="confirm_password" placeholder="Confirm Password" required>
+        </div>
 
         <button type="submit">Register</button>
     </form>
